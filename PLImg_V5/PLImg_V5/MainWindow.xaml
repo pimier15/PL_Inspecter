@@ -1,0 +1,310 @@
+﻿<mahapps:MetroWindow x:Class="PLImg_V2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PLImg_V2"
+        xmlns:mahapps ="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:xctk ="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:emgu="clr-namespace:Emgu.CV.UI;assembly=Emgu.CV.UI"
+        xmlns:lvc ="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="1080" Width="1700" Closing="MetroWindow_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="1000"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="PL Imaging Program" FontSize="30" Margin="10,0,0,0" FontWeight="Bold"/>
+        
+        <TabControl Grid.Row="1">
+            <TabItem Header="Scan" FontSize="24">
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="1300"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="500"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Width="400" Height="500" Margin="5,0,5,0"/>
+                        
+                        <TabControl>
+                            <TabItem Header="Scan Setting" FontSize="10">
+                                <Grid Grid.Row="0" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0" Content="Exposure Time" FontWeight="Bold" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" FontSize="13" />
+                                    <Label Grid.Row="1" Content="Line Rate"     FontWeight="Bold" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" FontSize="13" />
+                                    <Label Grid.Row="2" Content="Scan Speed mm/sec"  FontWeight="Bold" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" FontSize="13" />
+
+                                    <mahapps:NumericUpDown x:Name="nudExtime"   Grid.Row="0" Grid.Column="1"  Height="24" Width="120" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" StringFormat="0.0" KeyUp="nudExtime_KeyUp" />
+                                    <mahapps:NumericUpDown x:Name="nudlinerate" Grid.Row="1" Grid.Column="1"  Height="24" Width="120" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" StringFormat="0"   KeyUp="nudlinerate_KeyUp"  />
+                                    <mahapps:NumericUpDown x:Name="nudScanSpeed"   Grid.Row="2" Grid.Column="1"  Height="24" Width="120" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" StringFormat="0" />
+                                    
+                                    
+                                
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Control Device" FontSize="10">
+                                <Grid x:Name="gridflyback" Grid.Row="1" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                        <RowDefinition Height="47"/>
+                                    </Grid.RowDefinitions>
+                                    <Button x:Name ="btnGrap"       Grid.Row="0" Grid.Column="0" Content="Grap"        Width="120"   VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" FontSize="13" Click="btnGrap_Click"/>
+                                    <Button x:Name ="btnFreeze"     Grid.Row="0" Grid.Column="1" Content="Freeze"      Width="120"   VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" FontSize="13" Click="btnFreeze_Click"/>
+                                    <Button x:Name ="btnOrigin"      Grid.Row="1" Grid.Column="0" Content="origin"       Width="120"   VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" FontSize="13" Click="btnOrigin_Click"/>
+                                    <Button x:Name ="btnROrigin"     Grid.Row="1" Grid.Column="1" Content="ROrigin"      Width="120"   VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" FontSize="13" Click="btnROrigin_Click"/>
+                                    <Button x:Name ="btnXMove"      Grid.Row="2" Grid.Column="0" Content="X Move (mm)"      Width="120"   VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" FontSize="13" Click="btnXMove_Click"/>
+                                    <Button x:Name ="btnYMove"      Grid.Row="3" Grid.Column="0" Content="Y Move (mm)"      Width="120"   VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" FontSize="13" Click="btnYMove_Click"/>
+                                    <Button x:Name ="btnZMove"      Grid.Row="4" Grid.Column="0" Content="Z Move (mm)"      Width="120"   VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" FontSize="13" Click="btnZMove_Click"/>
+                                    <Button x:Name ="btnRMove"      Grid.Row="5" Grid.Column="0" Content="R Move (deg)"     Width="120"   VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="40,10,10,10" FontSize="13" Click="btnRMove_Click"/>
+
+                                    <UniformGrid Grid.Row="6" Grid.ColumnSpan="2" Columns="4">
+                                        <Label Content="Disable" HorizontalAlignment="Center" Margin="35,10,10,10" FontSize="13"/>
+                                        <CheckBox x:Name="ckbXDisa" Content=" : X"   FlowDirection="RightToLeft"  HorizontalAlignment="Center" VerticalAlignment="Center" Checked="ckbXDisa_Checked" Unchecked="ckbXDisa_Unchecked"/>
+                                        <CheckBox x:Name="ckbYDisa" Content=" : Y"   FlowDirection="RightToLeft" HorizontalAlignment="Center"  VerticalAlignment="Center" Checked="ckbYDisa_Checked" Unchecked="ckbYDisa_Unchecked"/>
+                                        <CheckBox x:Name="ckbZDisa" Content=" : Z"   FlowDirection="RightToLeft" HorizontalAlignment="Center"  VerticalAlignment="Center" Checked="ckbZDisa_Checked" Unchecked="ckbZDisa_Unchecked"/>
+                                    </UniformGrid>
+
+                                    <mahapps:NumericUpDown x:Name="nudGoXPos" StringFormat="0.00" Grid.Row="2" Grid.Column="1" Height="24" Width="120" Minimum="0" Maximum="299" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="46,10,10,10" HasDecimals="True" />
+                                    <mahapps:NumericUpDown x:Name="nudGoYPos" StringFormat="0.00" Grid.Row="3" Grid.Column="1" Height="24" Width="120" Minimum="0" Maximum="299"  VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="46,10,10,10" HasDecimals="True" />
+                                    <mahapps:NumericUpDown x:Name="nudGoZPos" StringFormat="0.000" Grid.Row="4" Grid.Column="1" Height="24" Width="120" Maximum="49"   Minimum="0"  VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="46,10,10,10" HasDecimals="True" />
+                                    <mahapps:NumericUpDown x:Name="nudGoRPos" StringFormat="0.00" Grid.Row="5" Grid.Column="1" Height="24" Width="120" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="46,10,10,10" />
+
+                                    
+                                </Grid>
+                            </TabItem>
+                            
+                            <TabItem Header="Trigger Scan" FontSize="10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150*"/>
+                                        <ColumnDefinition Width="150*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Select Scan Area Size" FontWeight="Bold" VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="40,10,10,10" FontSize="18" />
+                                    <UniformGrid Grid.Row="1" Grid.ColumnSpan="2" Columns="3">
+                                        <RadioButton x:Name="rdb1inch"  Content=" : 1Inch" FlowDirection="RightToLeft"  HorizontalAlignment="Center"  VerticalAlignment="Center"  IsChecked="True"/>
+                                        <RadioButton x:Name="rdb2inch"  Content=" : 2Inch" FlowDirection="RightToLeft"  HorizontalAlignment="Center"  VerticalAlignment="Center" />
+                                        <RadioButton x:Name="rdb4inch"  Content=" : 4Inch" FlowDirection="RightToLeft"  HorizontalAlignment="Center"  VerticalAlignment="Center" />
+                                    </UniformGrid>
+
+                                    <Button x:Name ="btnStartFixAreaScan"   Content="Scan Start"  Grid.Row="2" Grid.Column="0"   Height="24" Width="140"   VerticalAlignment="Center"  HorizontalAlignment="Center"  FontSize="12" Click="btnStartFixAreaScan_Click" />
+                                    <Button x:Name ="btnSaveData"           Content="Save Data"   Grid.Row="3" Grid.Column="0"   Height="24" Width="140"   VerticalAlignment="Center"  HorizontalAlignment="Center"  FontSize="12" Click="btnSaveData_Click"/>
+                                    <Button x:Name ="btnSaveImg"            Content="Save Img"    Grid.Row="3" Grid.Column="1"   Height="24" Width="140"   VerticalAlignment="Center"  HorizontalAlignment="Center"  FontSize="12" Click="btnSaveImg_Click"/>
+
+                                    <Label Grid.Row="4" Grid.Column="0" Content="ScanSpeed" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <xctk:IntegerUpDown x:Name="nudTrgScanSpeed" Grid.Row="4" Grid.Column="1" Margin="3" Value="17"/>
+
+                                    <Label x:Name="lblgrabstatus" Grid.Row="5" Grid.Column="0" Content="0" />
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
+
+
+                       
+                        <StackPanel Grid.Row="1" Margin="5" >
+                            <Border BorderBrush="Black" BorderThickness="1" Width="370" Height="370" Margin="5">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0" FontWeight="Bold" Content="Y Pos"  VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13"/>
+                                    <Label Grid.Row="1" FontWeight="Bold" Content="X Pos"  VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13" />
+                                    <Label Grid.Row="2" FontWeight="Bold" Content="Z Pos"  VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13" />
+                                    <Label Grid.Row="3" FontWeight="Bold" Content="Resolution"    VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13" />
+                                    <Label Grid.Row="4" FontWeight="Bold" Content="AF Variance" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13" />
+                                    <Label Grid.Row="5" FontWeight="Bold" Content="Diff"   VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13" />
+
+                                    <Label Grid.Row="0"  Grid.Column="1" FontWeight="Bold" x:Name="lblXpos"     Content="0"      VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13"/>
+                                    <Label Grid.Row="1"  Grid.Column="1" FontWeight="Bold" x:Name="lblYpos"     Content="0"      VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13" />
+                                    <Label Grid.Row="2"  Grid.Column="1" FontWeight="Bold" x:Name="lblZpos"     Content="0"      VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13" />
+                                    <Label Grid.Row="3"  Grid.Column="1" FontWeight="Bold" x:Name="lblBuffNum"  Content="0"      VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13" />
+                                    <Label Grid.Row="4"  Grid.Column="1" FontWeight="Bold" x:Name="lblAFV"      Content="0"      VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13" />
+                                    <Label Grid.Row="5"  Grid.Column="1" FontWeight="Bold" x:Name="lblDiff"      Content="0"      VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="20,1,10,1" FontSize="13" />
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+
+                    </Grid>
+
+                    <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="645"/>
+                            <ColumnDefinition Width="645"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="200"/>
+                            <RowDefinition Height="650"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5" >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="200"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Real Time Signal " VerticalAlignment="Center" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center"/>
+                                <WindowsFormsHost Grid.Row="1"  Width="620" Height="120" Margin="5,0,5,60" VerticalAlignment="Center">
+                                    <emgu:ImageBox x:Name="imgboxReal" Width="635" Height="185" />
+                                </WindowsFormsHost>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="5" >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="200"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Real Time Profile" VerticalAlignment="Center" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5" >
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="600"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Scaaned Image" VerticalAlignment="Center" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center"/>
+                                <UniformGrid Grid.Row="1" Width="560" Height="560" Rows="4" Columns="4">
+                                    <WindowsFormsHost   Width="140" Height="140"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan00"  Width="140" Height="140" Click="imgboxScan00_Click" />
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan01" Width="140" Height="140" Click="imgboxScan01_Click" />
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan02" Width="140" Height="140" Click="imgboxScan02_Click"/>
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan03" Width="140" Height="140" Click="imgboxScan03_Click"/>
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan10" Width="140" Height="140" Click="imgboxScan10_Click"/>
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan11" Width="140" Height="140" Click="imgboxScan11_Click"/>
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan12" Width="140" Height="140" Click="imgboxScan12_Click"/>
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan13" Width="140" Height="140" Click="imgboxScan13_Click"/>
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan20" Width="140" Height="140" Click="imgboxScan20_Click"/>
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan21" Width="140" Height="140" Click="imgboxScan21_Click"/>
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan22" Width="140" Height="140" Click="imgboxScan22_Click"/>
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan23" Width="140" Height="140" Click="imgboxScan23_Click"/>
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan30" Width="140" Height="140" />
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan31" Width="140" Height="140" />
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan32" Width="140" Height="140" />
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost   Width="140" Height="140" Margin="0,-2,0,0"  VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxScan33" Width="140" Height="140" />
+                                    </WindowsFormsHost>
+                                </UniformGrid>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="5" >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="600"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Trigger Scan" VerticalAlignment="Center" FontWeight="Bold" FontSize="13" HorizontalAlignment="Center"/>
+
+                                <DockPanel Grid.Row="1" Width="560" Height="560">
+                                    <WindowsFormsHost x:Name="windowTrig0"  Width="140" Height="560" Margin="0,-2,0,0" VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxTrig0" Width="140" Height="560" />
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost x:Name="windowTrig1" Width="140" Height="560" Margin="0,-2,0,0" VerticalAlignment="Top" >
+                                        <emgu:ImageBox x:Name="imgboxTrig1" Width="140" Height="560" />
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost x:Name="windowTrig2"  Width="140" Height="560" Margin="0,-2,0,0" VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxTrig2" />
+                                    </WindowsFormsHost>
+                                    <WindowsFormsHost x:Name="windowTrig3"   Width="140" Height="560" Margin="0,-2,0,0" VerticalAlignment="Top">
+                                        <emgu:ImageBox x:Name="imgboxTrig3" Width="140" Height="560" />
+                                    </WindowsFormsHost>
+                                    
+                                </DockPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+
+            <TabItem Header="Processing">
+
+            </TabItem>
+        </TabControl>
+    </Grid>
+</mahapps:MetroWindow>
